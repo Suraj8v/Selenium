@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class PositiveTests {
@@ -18,27 +19,35 @@ public class PositiveTests {
 		//2. open test page
 		String url = "https://the-internet.herokuapp.com/login";
 		driver.get(url);
-		sleep(1);
+		//sleep(1);
 		driver.manage().window().maximize();
-		sleep(1);
+		//sleep(1);
 		System.out.println("Page is opened");
 		
 		//3.enter username
 		WebElement username = driver.findElement(By.id("username"));
+		username.sendKeys("tomsmith");
 		
 		//4. enter password
 		WebElement password = driver.findElement(By.id("password"));
+		password.sendKeys("SuperSecretPassword!");
+		//sleep(2);
 		
 		//5.click login button
 		WebElement loginButton = driver.findElement(By.tagName("button"));
+		loginButton.click();
+		
+		String expectedUrl = "https://the-internet.herokuapp.com/secure";
+		String actualUrl =driver.getCurrentUrl();
+		Assert.assertEquals(actualUrl, expectedUrl, "Actual page url is not the same as expected");
 		
 		//6.successful login msg
 		WebElement successMsg = driver.findElement(By.cssSelector("div#flash"));
 		
 		//6.logout
-		WebElement logoutButton = driver.findElement(By.xpath("//a[@class='button secondary radius"));
+		WebElement logoutButton = driver.findElement(By.xpath("//div[@id='content']//a[@href='/logout']"));
 		
-		sleep(2);
+		//sleep(2);
 		 driver.close();
 		System.out.println("==============Test finished==========");
 
