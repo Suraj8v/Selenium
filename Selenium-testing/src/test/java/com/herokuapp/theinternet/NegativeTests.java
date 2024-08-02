@@ -11,9 +11,9 @@ import org.testng.annotations.Test;
 public class NegativeTests {
 
 	@Test
-	public void loginTest() {
+	public void incorrectUsernameTest() {
 		// 1. create driver
-		System.out.println("==========Test started=========");
+		System.out.println("==========incorrectUsernameTest started=========");
 		WebDriver driver = new ChromeDriver();
 
 		// 2. open test page
@@ -40,6 +40,43 @@ public class NegativeTests {
 		// 6..check if username is correct or incorrect
 		WebElement errorMsg = driver.findElement(By.cssSelector("div#flash"));
 		String expectedErrorMsg = "Your username is invalid!";
+		String actualErrorMsg = errorMsg.getText();
+		Assert.assertTrue(actualErrorMsg.contains(expectedErrorMsg),
+				"Actual error message is not the same as expected error message");
+
+		// 7.close browser
+		driver.close();
+		System.out.println("==============Test finished==========");
+
+	}
+
+	@Test
+	public void incorrectPasswordTest() {
+		// 1. create driver
+		System.out.println("==========incorrectPasswordTest started=========");
+		WebDriver driver = new ChromeDriver();
+
+		// 2. open test page
+		String url = "https://the-internet.herokuapp.com/login";
+		driver.get(url);
+		driver.manage().window().maximize();
+		System.out.println("Page is opened");
+
+		// 3.enter username
+		WebElement username = driver.findElement(By.id("username"));
+		username.sendKeys("tomsmith");
+
+		// 4. enter password
+		WebElement password = driver.findElement(By.id("password"));
+		password.sendKeys("SuperSecretPassword");
+
+		// 5.click login button
+		WebElement loginButton = driver.findElement(By.tagName("button"));
+		loginButton.click();
+
+		// 6..check if password is correct or incorrect
+		WebElement errorMsg = driver.findElement(By.cssSelector("div#flash"));
+		String expectedErrorMsg = "Your password is invalid!";
 		String actualErrorMsg = errorMsg.getText();
 		Assert.assertTrue(actualErrorMsg.contains(expectedErrorMsg),
 				"Actual error message is not the same as expected error message");
