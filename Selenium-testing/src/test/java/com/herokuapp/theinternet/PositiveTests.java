@@ -43,12 +43,16 @@ public class PositiveTests {
 		
 		//6.successful login msg
 		WebElement successMsg = driver.findElement(By.cssSelector("div#flash"));
+		String expectedMsg = "You logged into a secure area!";
+		String actualMsg = successMsg.getText();
+		Assert.assertTrue(actualMsg.contains(expectedMsg), "Actual message is not the same as expected message");
 		
 		//6.logout
 		WebElement logoutButton = driver.findElement(By.xpath("//div[@id='content']//a[@href='/logout']"));
+		Assert.assertTrue(logoutButton.isDisplayed(), "Logout button is not visible");	
 		
-		//sleep(2);
-		 driver.close();
+		//7.close browser
+		driver.close();
 		System.out.println("==============Test finished==========");
 
 	}
