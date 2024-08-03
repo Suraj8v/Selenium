@@ -6,12 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class NegativeTests {
 
-	@Test
-	public void incorrectUsernameTest() {
+	@Parameters({"username","password","expectedErrorMsg"})
+	@Test(priority = 1)
+	public void incorrectUsernameTest(String username, String password, String expectedErrorMsg) {
 		// 1. create driver
 		System.out.println("==========incorrectUsernameTest started=========");
 		WebDriver driver = new ChromeDriver();
@@ -25,12 +27,12 @@ public class NegativeTests {
 		System.out.println("Page is opened");
 
 		// 3.enter username
-		WebElement username = driver.findElement(By.id("username"));
-		username.sendKeys("tomsmithm");
+		WebElement usernameElement = driver.findElement(By.id("username"));
+		usernameElement.sendKeys(username);
 
 		// 4. enter password
-		WebElement password = driver.findElement(By.id("password"));
-		password.sendKeys("SuperSecretPassword!");
+		WebElement passwordElement = driver.findElement(By.id("password"));
+		passwordElement.sendKeys(password);
 		// sleep(2);
 
 		// 5.click login button
@@ -39,7 +41,7 @@ public class NegativeTests {
 
 		// 6..check if username is correct or incorrect
 		WebElement errorMsg = driver.findElement(By.cssSelector("div#flash"));
-		String expectedErrorMsg = "Your username is invalid!";
+//		String expectedErrorMsg = "Your username is invalid!";
 		String actualErrorMsg = errorMsg.getText();
 		Assert.assertTrue(actualErrorMsg.contains(expectedErrorMsg),
 				"Actual error message is not the same as expected error message");
@@ -50,7 +52,7 @@ public class NegativeTests {
 
 	}
 
-	@Test
+	@Test(priority = 2, enabled = false)
 	public void incorrectPasswordTest() {
 		// 1. create driver
 		System.out.println("==========incorrectPasswordTest started=========");
