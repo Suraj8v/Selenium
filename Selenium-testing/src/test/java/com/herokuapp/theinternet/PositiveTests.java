@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -26,7 +28,13 @@ public class PositiveTests {
 		// 3.enter username
 		WebElement username = driver.findElement(By.id("username"));
 		username.sendKeys("tomsmith");
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));//Specifies the amount of time the driver should wait when searching for an element if it is not immediately present. 
+		
+		//explicit wait
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+		
+		//implicit wait
+	//	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));//Specifies the amount of time the driver should wait when searching for an element if it is not immediately present. 
 
 		// 4. enter password
 		WebElement password = driver.findElement(By.id("password"));
