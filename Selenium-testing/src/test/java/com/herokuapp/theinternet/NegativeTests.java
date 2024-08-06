@@ -52,7 +52,7 @@ public class NegativeTests {
 
 	}
 
-	@Test(priority = 2, enabled = false)
+	@Test(priority = 2, enabled = true)
 	public void incorrectPasswordTest() {
 		// 1. create driver
 		System.out.println("==========incorrectPasswordTest started=========");
